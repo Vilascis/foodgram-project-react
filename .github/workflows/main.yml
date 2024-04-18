@@ -16,9 +16,8 @@ jobs:
       uses: garygrossgarten/github-action-ssh@release
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
+        username: ${{ secrets.USERNAME }}
+        privateKey: ${{ secrets.PRIVATE_KEY }}
         command: cd projects && mkdir -p foodgram && mkdir -p foodgram/docs
 
     - name: Copy infra files
@@ -27,9 +26,8 @@ jobs:
           local: infra/
           remote: /${{ secrets.USERNAME }}/projects/foodgram/
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
+          username: ${{ secrets.USERNAME }}
+          privateKey: ${{ secrets.PRIVATE_KEY }}
 
     - name: Copy docs
       uses: garygrossgarten/github-action-scp@release
@@ -37,9 +35,8 @@ jobs:
           local: docs
           remote: /${{ secrets.USERNAME }}/projects/foodgram/docs/
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
+          username: ${{ secrets.USERNAME }}
+          privateKey: ${{ secrets.PRIVATE_KEY }}
 
   build_push_backend_to_DockerHub:
     name: Building back image and pushing it to Docker Hub
@@ -96,9 +93,8 @@ jobs:
       uses: garygrossgarten/github-action-ssh@release
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
+        username: ${{ secrets.USERNAME }}
+        privateKey: ${{ secrets.PRIVATE_KEY }}
         command: |
           cd projects/foodgram/
           echo DEBUG=${{ secrets.DEBUG }} > .env
